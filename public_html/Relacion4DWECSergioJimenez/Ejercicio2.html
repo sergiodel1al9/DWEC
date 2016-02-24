@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            /**
+             * Funcion para saber si un numero es primo
+             * @param {int} numero 
+             * @returns {Boolean} devuelve verdadero si es primo y falso si no lo es
+             */
+            function esPrimo(numero) {
+                //comprueba todos los numero desde el 2 al anterior al numero
+                for (var i = 2; i <= numero - 1; i++) {
+                    //si al dividir el numero entre i el resto es 0 ya sabemos que no es primo
+                    if (numero % i === 0) {
+                        return false;
+                    }
+                }
+                //si sale del bucle el numero es primo y devolvemos true
+                return true;
+            }
+
+            document.write("Crear un programa que muestre, de forma descendente, los 15 primeros números primos. Estos números primos deben estar almacenados en un array. Todas los document.write tienen que utilizar este array.");
+            document.write("<br>");
+            document.write("<br>");
+            //definimos un array
+            var numeroPrimos = new Array;
+            //variable para llevar el control de los numeros a comprobar
+            var numero = 2;
+            //mientras la longitud del bucle sea menor que 15 
+            while (numeroPrimos.length < 15) {
+                //si el numero es primo lo introducimos en el array
+                if (esPrimo(numero)) {
+                    numeroPrimos.push(numero);
+                }
+                //incrementamos numero
+                numero++;
+            }
+            //mostramos los valores del array
+            for (var i = 1; i < numeroPrimos.length; i++) {
+                document.write(numeroPrimos[i] + "<br>");
+
+            }
+
+            document.write("a) De la lista anterior, mostrar los 3 últimos números.");
+            document.write("<br>");
+
+
+            document.write(numeroPrimos[numeroPrimos.length - 1]);
+            document.write("<br>");
+            document.write(numeroPrimos[numeroPrimos.length - 2]);
+            document.write("<br>");
+            document.write(numeroPrimos[numeroPrimos.length - 3]);
+            document.write("<br>");
+
+            document.write("b) Mostrar todos los números primos superiores a 45.");
+            document.write("<br>");
+            //bucle que recorre el array
+            for (var i = 1; i < numeroPrimos.length; i++) {
+                //si es mayor a 45 los muestra por pantalla
+                if (numeroPrimos[i] > 45) {
+                    document.write(numeroPrimos[i] + "<br>");
+                }
+            }
+            
+            document.write("c) Elimine los números primos que se encuentren en las posiciones pares.");
+            document.write("<br>");
+            //bucle que recorre el array
+            for (var i = 1; i < numeroPrimos.length; i++) {
+                //si la posicion del array al dividirla entre 2 su resto es 0 elimina la posicion
+                if (i % 2 === 0) {
+                    document.write(numeroPrimos[i] + "<br>");
+                    delete numeroPrimos[i];
+                    
+                    
+                }
+            }
+        </script>
+    </body>
+</html>

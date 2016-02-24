@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2016 Super
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head>
+        <title>Ejercicio 3</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="Preguntas">
+            <h3>Travial</h3>
+            <br/>
+            <fieldset>
+                <legend>Añada la pregunta</legend>
+                Pregunta de categoría:
+                <form id="formulario">
+                    <select id="categoria">
+                        <option value="geografia">Geografía</option>
+                        <option value="historia">Historia</option>
+                        <option value="espectaculos">Espectáculos</option>
+                        <option value="cienciaytecnologia">Ciencia y Tecnología</option>
+                        <option value="Deportes">Deportes</option>
+                    </select>
+                    <br>
+                    <textarea id="pregunta" rows="4" cols="50"></textarea>
+                    <br>
+                    Respuesta 1 <input type="text" name="respuesta1" id="respuesta1"><input type="radio" name="respuesta" value="respuesta1"><br>
+                    Respuesta 2 <input type="text" name="respuesta2" id="respuesta2"><input type="radio" name="respuesta" value="respuesta2"><br>
+                    Respuesta 3 <input type="text" name="respuesta3" id="respuesta3"><input type="radio" name="respuesta" value="respuesta3"><br>
+                    Respuesta 4 <input type="text" name="respuesta4" id="respuesta4"><input type="radio" name="respuesta" value="respuesta4"><br>
+
+                    <input type="button" value="Añadir" onclick="procesarFormulario(document.getElementById('formulario'))"/>
+                </form>
+            </fieldset>
+        </div>
+        <div id="respuesta"></div>
+        <script>
+            function procesarFormulario(formulario) {
+
+                // Validamos el formulario
+                if (validarForm(formulario)) {
+
+                    // Si todo es correcto creamos una etiqueta con el resultado de la categoría seleccionada
+                    var categoria = crearLabel("Categoría: ", formulario.categoria.options[formulario.categoria.selectedIndex].text);
+
+                    // Creamos una etiqueta con la pregunta formulada
+                    var pregunta = crearLabel("Pregunta: ", formulario.pregunta.value);
+
+                    // Recuperamos el valor del radio button seleccionado
+                    var nrepuesta = recuperarRadioSelect() + 1;
+
+                    // Creamos una etiqueta con el texto de la respuesta seleccionada
+                    var respuesta = crearLabel("Respuesta correcta:  ", document.getElementById('respuesta' + nrepuesta).value);
+
+                    // Localizamos el div que contendrá las respuestas
+                    var anclaje = document.getElementById('respuesta');
+
+                    // Anexamos las etiquetas creadas con un retorno de carro a continuación
+                    anclaje.appendChild(categoria);
+                    anclaje.appendChild(document.createElement('br'));
+
+                    anclaje.appendChild(pregunta);
+                    anclaje.appendChild(document.createElement('br'));
+
+                    anclaje.appendChild(respuesta);
+                    anclaje.appendChild(document.createElement('br'));
+                }
+            }
+            /**
+             * Función que nos permite crear un objeto label
+             * @param {String} encabezado El encabezado que queremos mostrar en la etiqueta
+             * @param {String} texto El texto que queremos mostrar en la etiqueta
+             * @returns {undefined}             
+             */
+            function crearLabel(encabezado, texto)
+            {
+                // Creamos varias etiquetas para mostrar los resultados
+                var lblTextoEtiqueta = document.createElement('label');
+
+                // Asignamos los resultados a las etiquetas correspondientes
+                lblTextoEtiqueta.appendChild(document.createTextNode(encabezado));
+
+                // Creamos varias etiquetas para mostrar los resultados
+                var lblEtiqueta = document.createElement('label');
+
+                // Asignamos los resultados a las etiquetas correspondientes
+                lblEtiqueta.appendChild(document.createTextNode(texto));
+
+                // Anexamos el valor de la etiqueta al texto
+                lblTextoEtiqueta.appendChild(lblEtiqueta);
+
+                // Devolvemos el objeto creado
+                return lblTextoEtiqueta;
+            }
+            /**
+             * funcion para validar el texto de la respuesta mediante expresiones regulares
+             * @param {String} valor
+             * @returns {Boolean} devuleve verdadero si la cadena es correcta o falso si no lo es
+             */
+            function validarRespuesta(valor) {
+                //si el formato es diferente al definido por la expresion regular devuelve falso
+                if (!(/^([a-zA-Z0-9 ÑÁÉÍÓÚñáéíóú¿¡?!%,.]{1,25})$/i.test(valor))) {
+                    return false;
+                }
+                return true;
+            }
+            /**
+             * funcion para validar el texto de la pregunta mediante expresiones regulares
+             * @param {String} valor
+             * @returns {Boolean} devuleve verdadero si la cadena es correcta o falso si no lo es
+             */
+            function validarPregunta(valor) {
+                //si el formato es diferente al definido por la expresion regular devuelve falso
+                if ((/^[a-zA-Z0-9 ÑÁÉÍÓÚñáéíóú¿¡?!%,.]{1,120}/i.test(valor))) {
+
+                    // Comprobamos que el número de espacios en blanco detrás de un punto
+                    if(!validarEspacioTrasSimbolo(valor, ".", 1))
+                    {
+                        // Si el número de espacios tras un punto no es correcto, devolvemos false
+                        return false;
+                    }
+                    
+                    // Comprobamos que el número de espacios en blanco detrás de una coma
+                    if(!validarEspacioTrasSimbolo(valor, ",", 1))
+                    {
+                        // Si el número de espacios tras una  coma no es correcto, devolvemos false
+                        return false;
+                    }                    
+                    
+                    // Si se han pasado todas las validaciones, devolvemos true
+                    return true;
+                }
+                else
+                {
+                    // Si el texto no valida los caracteres de la expresión regular devolvemos false
+                    return false;
+                }
+            }
+
+            
+            /**
+             * Función que nos permite validar si en una cadena existen en 
+             * número de espacios indicados a continuación del símbolo especificado
+             * @param {string} cadena La cadena que vamos a validar
+             * @param {string} simbolo El símbolo tras el cual comprobaremos los espacios
+             * @param {int} espacios El número de espacios que queremos comprobar
+             * @return {bool} true si todo es correcto, false si se ha producido un error 
+             * 
+             */
+            function validarEspacioTrasSimbolo(cadena, simbolo, espacios)
+            {
+                // Usamos split para partir la cadena usando el símbolo como punto de referencia
+                var array = cadena.split(simbolo);
+
+                // Si el tamaño del array es mayor de 1 indica que al menos había un símbolo del que debemos buscar
+                if (array.length > 1)
+                {
+                    // Iteramos por el array de palabras
+                    for (var i = 0; i < array.length; i++)
+                    {
+                        // Comprobamos que el valor de la iteración del array no sea el primero, pues no 
+                        // es posible tener espacios en blanco en este caso. También comprobamos que 
+                        // tengamos un valor con el que trabajar y finalmente buscamos la cantidad de 
+                        // espacios en blanco que hay antes de el primer caracter dentro del valor de la iteración.
+                        // En el caso de que el número de espacios en blanco sea distinto del número de espacios 
+                        // especificados devolvemos false como resultado de la función
+                        if (i > 0 && array[i] !== "" && array[i].match(/^ */)[0].length !== espacios)
+                        {
+                            // Se han encontrado espacios en blanco de más o de menos, devolvemos false
+                            return false;
+                        }
+                    }
+
+                    // Si todo sale bien, devolvemos true
+                    return true;
+                }
+                else
+                {
+                    // Si no hay símbolo, no hay nada que buscar, devolvemos true
+                    return true;
+                }
+            }
+
+
+            /**
+             * 
+             * @returns {Boolean}
+             */
+            function validarRadio() {
+                var radios = document.getElementsByName('respuesta');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            function recuperarRadioSelect() {
+                var radios = document.getElementsByName('respuesta');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+            /**
+             * Funcion para validar el formulario 
+             * @param {Form} formulario el formulario que se va a enviar por submit y que se va a validar
+             * @returns {Boolean} devuleve verdadero si el dato introducido es correcto o falso si no lo es
+             */
+            function validarForm(formulario) {
+
+                if (!validarPregunta(formulario.pregunta.value)) {
+                    alert('El formato de la pregunta es incorrecto!!');
+                    return false;
+                }
+
+                //si el valor no es correcto muestra un mensaje por pantalla y devuelve falso para que no se ejecute el submit 
+                if (!validarRespuesta(formulario.respuesta1.value)) {
+                    alert('El formato de la respuesta 1 es incorrecto!!');
+                    return false;
+                }
+                if (!validarRespuesta(formulario.respuesta2.value)) {
+                    alert('El formato de la respuesta 2 es incorrecto!!');
+                    return false;
+                }
+                if (!validarRespuesta(formulario.respuesta3.value)) {
+                    alert('El formato de la respuesta 3 es incorrecto!!');
+                    return false;
+                }
+                if (!validarRespuesta(formulario.respuesta4.value)) {
+                    alert('El formato de la respuesta 4 es incorrecto!!');
+                    return false;
+                }
+
+                if (!validarRadio()) {
+                    alert('Seleccione una respuesta!!');
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </body>
+</html>

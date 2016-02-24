@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Ejercicio 2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="Ejercicio1.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <form id="formulario" action="" method="get" onsubmit="return validarForm(this)"> <br/>
+            Nombre:<input type="text" name="nombre" id="nombre" value="" size="42" maxlength="30" onblur="this.value = properCase(this.value)"/>
+            <br>
+            Apellidos:<input type="text" name="ape" id="apellidos" value="" size="40" maxlength="80" onblur="this.value = properCase(this.value)"/>
+            <br>
+            Contraseña:<input type="password" name="contrasena" id="contrasena" value="" size="40" maxlength="80"/>
+            <br>
+            Repite la contraseña:<input type="password" name="contrasena2" id="contrasena2" value="" size="40" maxlength="80"/>
+            <br>
+            Fecha de nacimiento: <input type="date" name="fechaNacimiento" id="fechaNacimineto" value="" />
+            <br>            
+            <input type="submit" name="enviar" value="Guardar cambios" />
+            <input type="reset" name="limpiar" value="Borrar los datos introducidos"/>
+        </form>
+
+        <script>
+            /**
+             * funcion para validar el apellidos mediante expresiones regulares
+             * @param {String} valor
+             * @returns {Boolean} devuleve verdadero si la cadena es correcta o falso si no lo es
+             */
+            function validarApellido(valor) {
+                //si el formato es diferente al definido por la expresion regular devuelve falso
+                if (!(/^([a-z ñáéíóú]{2,60})$/i.test(valor))) {
+                    return false;
+                }
+                return true;
+            }
+
+            /**
+             * funcion para validar el nombre mediante expresiones regulares
+             * @param {string} valor el nombre a validar
+             * @returns {Boolean} devuleve verdadero si la cadena es correcta o falso si no lo es
+             */
+            function validarNombre(valor) {
+                //si el formato es diferente al definido por la expresion regular devuelve falso
+                if (!(/^([a-z ñáéíóú]{2,60})$/i.test(valor))) {
+                    return false;
+                }
+                return true;
+
+            }
+
+            /**
+             * Función que nos permite validar la contraseña
+             * @param {String} valor La contraseña a validar
+             * @returns {Boolean}
+             */
+            function validarContrasena(valor) {
+                
+                // Creamos una expresión regular para que valide que al menos 
+                // hay una letra en minuscula, una en mayuscula, un número y un carácter especial
+                if (!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,;-])/.test(valor))) {
+                    // Si no se cumple, devolvemos false
+                    return false;
+                }
+
+                // Si se cumple devolvemos true
+                return true;
+            }
+
+            /**
+             * Función que nos permite cambiar un texto a ProperCase
+             * @param {String} texto El texto a formatear
+             * @returns {String} La cadena formateada
+             */
+            function properCase(texto) {
+                // Devolvemos el texto formateado
+                return (texto ? texto.toLowerCase() : texto)
+                        .replace(/(^|[\s\xA0])[^\s\xA0]/g, function (s) {
+                            return s.toUpperCase();
+                        });
+            }
+
+            /**
+             * Funcion para validar el formulario 
+             * @param {Form} formulario el formulario que se va a enviar por submit y que se va a validar
+             * @returns {Boolean} devuleve verdadero si el dato introducido es correcto o falso si no lo es
+             */
+            function validarForm(formulario) {
+                //si el valor no es correcto muestra un mensaje por pantalla y devuelve falso para que no se ejecute el submit 
+                if (!validarNombre(formulario.nombre.value)) {
+                    alert("Introduzca un nombre válido!!");
+                    return false;
+                }
+                if (!validarApellido(formulario.ape.value)) {
+                    alert('Introduzca unos apellidos válidos!!');
+                    return false;
+                }
+                
+                if(formulario.contrasena.value !== formulario.contrasena2.value)
+                {
+                    alert('Las contraseñas son distintas!!');
+                    return false;
+                }
+                
+                if (!validarContrasena(formulario.contrasena.value)) {
+                    alert('La contraseña introducida no es válida!!');
+                    return false;
+                }
+                
+
+                return true;
+            }
+        </script>
+    </body>
+</html>

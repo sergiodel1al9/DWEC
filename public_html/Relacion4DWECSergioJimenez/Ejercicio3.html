@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+3. Cree un array de productos típicos navideños.
+a) Ordénelos alfabéticamente.
+b) Muéstrelos en pantalla.
+c) Pida añadir alguno que no esté y añádalo en su posición correcta.
+-->
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+
+            //creamos un array de longitud 7 predefinido
+            var navidad = new Array("Mazapán", "Turrón", "Roscos", "Polvorón", "Zambomba", "Regalos", "Cuñaos", "Ñoquis");
+            //recorremos el array para mostrar los valores por pantalla
+            for (var i = 0; i < navidad.length; i++) {
+                document.write(navidad[i] + "<br>");
+            }
+            document.write("<br>");
+
+            //con el metodo sort de javascript se ordenan los valores del array alfabeticamente.
+            //con la funcion localCompare ordena segun tu configuracion de idima de tu pc
+            navidad.sort(function (a, b) {
+                return a.localeCompare(b);
+            });
+            //recorremos el array para mostrar los valores por pantalla
+            for (var i = 0; i < navidad.length; i++) {
+                document.write(navidad[i] + "<br>");
+            }
+            document.write("<br>");
+
+            /**
+             * Funcion para agragar un nuevo valor al array y colocarlo en orden alfabetico
+             * @returns {undefined}
+             */
+            function agregar() {
+                //variable para almacenar el valor que introduce el usuario
+                var nuevo = prompt("Introduzca un nuevo elemento: ");
+                //con el metodo push añade un elemento al array
+                navidad.push(nuevo);
+                //con el metodo sort de javascript se ordenan los valores del array alfabeticamente.
+                //con la funcion localCompare ordena segun tu configuracion de idima de tu pc
+                navidad.sort(function (a, b) {
+                    return a.localeCompare(b);
+                });
+                //recorremos el array para mostrar los valores por pantalla
+                for (var i = 0; i < navidad.length; i++) {
+                    
+                    document.body.innerHTML += navidad[i] + "<br>";
+                    //document.write(navidad[i] + "<br>");
+                }
+            }
+
+            document.write("<br>");
+
+
+
+
+        </script>
+
+        <button onclick="agregar()">Añadir</button>
+        <br>
+    </body>
+</html>

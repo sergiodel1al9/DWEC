@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Currículum</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="index.js" type="text/javascript"></script>
+        <link type="text/css" rel="stylesheet" href="css.css"/>
+    </head>
+    <body id="cuerpo">
+        <form action="" onsubmit="return false;">
+            <div id="datos_personales">
+                <fieldset>
+                    <legend>Datos personales</legend>
+                    Nombre: <input type="text" name= "nombre" id="nombre" />
+                    <br>
+                    Apellidos: <input type="text" name="apellidos" id="apellidos" />
+                    <br>
+                    Dirección: <input type="text" name="direccion" id="direccion" />
+                    <br>
+                    Ciudad: <select id="ciudad">
+                        <option value="almeria">Almería</option>
+                        <option value="granada">Granada</option>
+                        <option value="malaga">Málaga</option>
+                    </select> 
+                    <br>
+                    Población: <select id="poblacion"></select> 
+                    <br/>
+                    Código Postal: <label id="codpostal"></label>
+                    <br/>
+                    Teléfono: <input type="number" name="telefono" id="telefono" />
+                    <br>
+                    E-Mail: <input type="text" name="email" id="email" />
+                    <br>
+                    Fecha nacimiento: <input type="date" name="fnacimiento" id="fnacimiento" />                
+                    <br>
+                    Lugar nacimiento: <input type="text" name="lugarnac" id="lugarnac" />                
+                    <br>
+                    Estado civil: <select id="estadocivil">
+                        <option value="casado">Casado</option>
+                        <option value="soltero">Soltero</option>
+                        <option value="divorciado">Divorciado</option>
+                        <option value="viudo">Viudo</option>
+                        <option value="otro">Otro</option>
+                    </select> 
+                    <br>
+
+                </fieldset>
+            </div>
+
+            <div id="informacion_academica">
+                <fieldset>
+                    <legend>Información académica</legend>
+                    Nombre de la institución: <input type="text" name= "institucionacademica" id="institucionacademica" />
+                    <br>
+                    Título obtenido: <input type="text" name="tituloacademico" id="tituloacademico" />
+                    <br>
+                    Fecha comienzo: <input type="date" name="fcomienzoacademico" id="fcomienzoacademico" />
+                    <br>
+                    Fecha fin: <input type="date" name="ffinacademico" id="ffinacademico" />                
+                    <br>                
+                    Comentarios: <textarea id="comentarios"></textarea>                
+                    <br>
+                    <input type="hidden" id="modoInAc" />
+                    <button id="addInfoAcademica">Añadir</button>
+                </fieldset>
+                <div id="contenedor_tabla_infoAcademica" class="tablaDatos"></div>
+            </div>
+
+            <div id="experiencia_profesional">
+                <fieldset>
+                    <legend>Experiencia profesional</legend>
+                    Empresa: <input type="text" name= "empresa" id="empresa" />
+                    <br>
+                    Puesto: <input type="text" name="puesto" id="puesto" />
+                    <br>
+                    Fecha comienzo: <input type="date" name="fcomienzoprofesional" id="fcomienzoprofesional" />
+                    <br>
+                    Fecha fin: <input type="date" name="ffinprofesional" id="ffinprofesional" />                
+                    <br>                
+                    Descripción del puesto: <textarea id="descripcionPuesto"></textarea>                
+                    <br>
+                    <input type="hidden" id="modoExp" />
+                    <button id="addExpProfesional">Añadir</button>
+                </fieldset>
+                <div id="contenedor_tabla_experienciaProf"  class="tablaDatos"></div>
+            </div>
+
+            <div id="cursos_realizados">
+                <fieldset>
+                    <legend>Cursos realizados</legend>
+                    Nombre del curso: <input type="text" name= "nombrecurso" id="nombrecurso" />
+                    <br>
+                    Institución: <input type="text" name="institucioncurso" id="institucioncurso" />
+                    <br>
+                    Fecha comienzo: <input type="date" name="fcomienzo" id="fcomienzo" />
+                    <br>
+                    Fecha fin: <input type="date" name="ffin" id="ffin" />                
+                    <br>                
+                    Título obtenido: <input type="text" name="titulo" id="titulo" />
+                    <br>
+                    <input type="hidden" id="modoCurso" />
+                    <button id="addCursos">Añadir</button>
+                </fieldset>
+                <div id="contenedor_tabla_cursos" class="tablaDatos"></div>
+            </div>
+
+            <div id="idiomas">
+                <fieldset>
+                    <legend>Idiomas</legend>
+                    Idioma: <input type="text" name= "idioma" id="idioma" />
+                    <br>
+                    Nivel: <input type="text" name="nivel" id="nivel" />
+                    <br>
+                    <input type="hidden" id="modoIdioma" />
+                    <button id="addIdiomas">Añadir</button>
+                </fieldset>
+                <div id="contenedor_tabla_idiomas" class="tablaDatos"></div>
+            </div>
+
+            <div >
+                <fieldset>
+                    <legend>Conocimientos adicionales</legend>
+                    <textarea id="conocimientos_adicionales" rows="4" cols="50"></textarea>               
+                </fieldset>
+            </div>
+
+            <div >
+                <fieldset>
+                    <legend>Hobbies y actividades de interés particular</legend>
+                    <textarea id="hobbies" rows="4" cols="50"></textarea>               
+                </fieldset>
+            </div>
+
+            Carta de presentación: <input type="file" id="carta" />
+            <br/>
+
+            <input id="validarDatos" type="button" value="Mostrar curriculum"/>
+        </form>
+    </body>
+</html>

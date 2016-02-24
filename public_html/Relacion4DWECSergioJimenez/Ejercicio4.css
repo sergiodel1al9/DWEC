@@ -1,0 +1,23 @@
+
+
+.VotoSi, .VotoAbstencion, .VotoNo{
+    width : 10px;
+    padding : 10px;
+    border : 1px solid black;
+    display : block;
+    float : left;
+}
+
+.VotoSi{
+    background-color: green;
+}
+.VotoNo{
+    background-color: red;
+}
+.VotoAbstencion{
+    background-color: yellow;
+}
+
+
+
+

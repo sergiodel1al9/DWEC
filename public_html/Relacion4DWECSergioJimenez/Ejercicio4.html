@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="Ejercicio4.css"/>
+    </head>
+    <body onload="inicializar();">
+        <div id="partidos">
+
+            <br/>
+            <fieldset>
+                <legend>Partido político</legend>
+                Nombre: <input type="text" name= "nombrepartido" id="nombrepartido" />
+                <br>
+                Ideología: <input type="text" name="ideologia" id="ideologia" />
+                <br>
+                <button onclick="crearPartido(
+                                document.getElementById('nombrepartido').value,
+                                document.getElementById('ideologia').value)">Añadir</button>
+            </fieldset>
+            <div id="contenedor_tabla_partidos"></div>
+
+
+        </div>
+
+        <div id="politicos">
+
+            <br/>
+            <fieldset>
+                <legend>Político</legend>
+                Nombre: <input type="text" name= "nombrepolitico" id="nombrepolitico" />
+                <br>
+                Apellidos: <input type="text" name="apellidos" id="apellidos" />
+                <br>
+                DNI: <input type="text" name="dni" id="dni" />
+                <br>
+                Partido al que pertenece: <input type="text" name="partido" id="partido" />
+                <br>
+                Provincia a la que representa: <input type="text" name="provincia" id="provincia" />
+                <br>
+                Ideología: <input type="text" name="ideologiaPolitico" id="ideologiaPolitico" />
+                <br>
+                <button onclick="crearPolitico(
+                                document.getElementById('nombrepolitico').value,
+                                document.getElementById('apellidos').value,
+                                document.getElementById('dni').value,
+                                document.getElementById('partido').value,
+                                document.getElementById('provincia').value,
+                                document.getElementById('ideologiaPolitico').value)">Añadir</button>
+            </fieldset>
+
+            <div id="contenedor_tabla_politicos"></div>
+        </div>
+
+        <div id="ley">
+
+
+            <fieldset>
+                <legend>Ley</legend>
+                Partido que la ha creado: <input type="text" name= "partidocreador" id="partidocreador" />
+                <br>
+                ¿Aprobada? <input type="text" name="aprobada" id="aprobada" />
+                <br>
+                Texto de proposicion de ley <input type="text" name="proposicion" id="proposicion" />
+                <br>
+                Nombre de la ley <input type="text" name="nombreley" id="nombreley" />
+                <br>
+                <button onclick="crearLey(
+                                document.getElementById('proposicion').value,
+                                document.getElementById('partidocreador').value,
+                                document.getElementById('aprobada').value,
+                                document.getElementById('nombreley').value)">Añadir</button>
+            </fieldset>
+
+            <div id="contenedor_tabla_leyes"></div>
+        </div>
+
+        <div id = "mostrar_resultados"></div>
+        <script>
+            //array para almcenar los partidos
+            var arrayPartidos = new Array;
+
+            //array para almacenar los politicos
+            var arrayPoliticos = new Array;
+
+            //array para almacenar las leyes
+            var arrayLeyes = new Array;
+            /**
+             * Constructor de la clase partido
+             * @param {String} ideologia Ideologia del partido (izquierda, derecha, centro, vendidos)
+             * @param {String} nombre Nombre del partido 
+             * @returns {Partido} devuelve un objeto partido
+             */
+
+            function Partido(ideologia, nombre) {
+                this.ideologia = ideologia;
+                this.nombre = nombre;
+            }
+            /**
+             * Función que se encarga de crear una tabla con los partidos dados de alta
+             * @param {Array[Partido]} partidos Array que contiene los objetos Partido con los partidos políticos dados de alta
+             * @returns {undefined}
+             */
+            function crearTablaPartidos(arrayPartidos)
+            {
+                // Localizamos el contenedor de la tabla
+                var contenedor = document.getElementById('contenedor_tabla_partidos');
+
+                // Comprobamos si tiene algún hijo
+                if (contenedor.childElementCount > 0)
+                {
+                    // De ser así, lo eliminamos
+                    contenedor.removeChild(contenedor.childNodes[0]);
+                }
+
+                // Creamos un nuevo objeto table
+                var tabla = document.createElement('table');
+
+                // Le asignamos un id
+                tabla.id = 'tabla_partidos';
+                
+
+                // Creamos una fila para la descripción de las columnas
+                var tr = document.createElement('tr');
+
+                // Creamos dos columnas de cabecera
+                var th1 = document.createElement('th');
+                var th2 = document.createElement('th');
+
+
+                // Creamos los textos para las cabeceras
+                var header1 = document.createTextNode('Nombre');
+                var header2 = document.createTextNode('Ideario');
+
+                // Anexamos el texto a las cabeceras
+                th1.appendChild(header1);
+                th2.appendChild(header2);
+
+                // Y las cabeceras a la fila
+                tr.appendChild(th1);
+                tr.appendChild(th2);
+
+                // Finalmente agregamos la fila con la descripciónd e las columnas a la tabla
+                tabla.appendChild(tr);
+
+                // Iteramos tantas veces como elementos tenga el array de partidos que se nos ha pasado como parámetro
+                for (var i = 0; i < arrayPartidos.length; i++) {
+
+                    // Recuperamos el partido correspondiente a la iteración
+                    var partido = arrayPartidos[i];
+
+                    // Creamos una fila nueva para el partido
+                    tr = document.createElement('tr');
+
+                    // Y dos columnas
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+
+                    // Recuperamos el valor del nombre y del ideario y creamos dos objetos TextNode
+                    var text1 = document.createTextNode(partido.nombre);
+                    var text2 = document.createTextNode(partido.ideologia);
+
+                    // Añadimos los textos a las columnas
+                    td1.appendChild(text1);
+                    td2.appendChild(text2);
+
+                    // Las columnas a la fila
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+
+                    // Y la fila a la tabla
+                    tabla.appendChild(tr);
+                }
+
+                // Finalmente, agregamos la tabla creada dinamicamente al contenedor
+                document.getElementById('contenedor_tabla_partidos').appendChild(tabla);
+            }
+
+            /**
+             * Funcion para crear un partido y añadirlo al array arraypartidos
+             * @param {String} nombre
+             * @param {String} ideologia
+             * @returns {undefined}
+             */
+            function crearPartido(nombre, ideologia) {
+                var partido = new Partido(ideologia, nombre);
+                arrayPartidos.push(partido);
+
+                crearTablaPartidos(arrayPartidos);
+            }
+            /**
+             * Contructor de la clase ley
+             * @param {String} textoDeLaProposicionDeLey
+             * @param {Partido} partido
+             * @param {Boolean} aprobado Si la ley es aprobada o no
+             * @returns {Ley} devuleve un objeto ley
+             */
+
+            function Ley(textoDeLaProposicionDeLey, partido, aprobado, nombre) {
+                this.textoDeLaProposicionDeLey = textoDeLaProposicionDeLey;
+                this.partido = partido;
+                this.aprobado = aprobado;
+                this.nombre = nombre;
+            }
+
+            function crearTablaLeyes(leyes)
+            {
+
+                // Localizamos el contenedor de la tabla
+                var contenedor = document.getElementById('contenedor_tabla_leyes');
+
+                // Comprobamos si tiene algún hijo
+                if (contenedor.childElementCount > 0)
+                {
+                    // De ser así, lo eliminamos
+                    contenedor.removeChild(contenedor.childNodes[0]);
+                }
+
+                // Creamos un nuevo objeto table
+                var tabla = document.createElement('table');
+
+                // Le asignamos un id
+                tabla.id = 'tabla_leyes';
+
+                // Creamos una fila para la descripción de las columnas                
+                var tr = document.createElement('tr');
+
+                // Creamos dos columnas de cabecera
+                var th1 = document.createElement('th');
+                var th2 = document.createElement('th');
+                var th3 = document.createElement('th');
+                var th4 = document.createElement('th');
+                var th5 = document.createElement('th');
+
+                // Creamos los textos para las cabeceras
+                var header1 = document.createTextNode('Nombre');
+                var header2 = document.createTextNode('Proponedor');
+                var header3 = document.createTextNode('Aprobada');
+                var header4 = document.createTextNode('Texto');
+                var header5 = document.createTextNode('');
+
+                // Anexamos el texto a las cabeceras
+                th1.appendChild(header1);
+                th2.appendChild(header2);
+                th3.appendChild(header3);
+                th4.appendChild(header4);
+                th5.appendChild(header5);
+
+                // Y las cabeceras a la fila
+                tr.appendChild(th1);
+                tr.appendChild(th2);
+                tr.appendChild(th3);
+                tr.appendChild(th4);
+                tr.appendChild(th5);
+
+                // Finalmente agregamos la fila con la descripciónd e las columnas a la tabla
+                tabla.appendChild(tr);
+
+                var ley;
+
+                // Iteramos tantas veces como elementos tenga el array de leyes que se nos ha pasado como parámetro
+                for (var i = 0; i < arrayLeyes.length; i++) {
+
+                    // Recuperamos la ley correspondiente a la iteración
+                    ley = arrayLeyes[i];
+
+                    // Creamos una fila nueva para la ley
+                    tr = document.createElement('tr');
+
+                    // Y dos columnas
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    var td3 = document.createElement('td');
+                    var td4 = document.createElement('td');
+                    var td5 = document.createElement('td');
+
+                    // Recuperamos el valor del nombre, del partido, si la ley ha sido aprobada, para los cuales crearemos nodos de texto
+                    var text1 = document.createTextNode(ley.nombre);
+                    var text2 = document.createTextNode(ley.partido.nombre);
+                    var text3 = document.createTextNode(ley.aprobado);
+
+                    // Creamos así mismo un botón, que el usuario deberá pulsar para ver el texto de la ley
+                    var boton = document.createElement('button');
+
+                    // Asignamos el texto al botón
+                    boton.innerHTML = 'Ver';
+
+                    // Y asiganamos así mismo una función al evento onclick, en este caso, 
+                    // que se muestre el texto de la ley en una ventana emergente
+                    boton.onclick = (function () {
+                        var texto = ley.textoDeLaProposicionDeLey;
+                        return function () {
+                            alert(texto);
+                        };
+                    })();
+
+                    // Creamos así mismo un botón, que el usuario deberá pulsar para votar
+                    var botonVotar = document.createElement('button');
+
+                    // Asignamos el texto al botón
+                    botonVotar.innerHTML = 'Votar';
+
+                    // Y asiganamos así mismo una función al evento onclick, en este caso, 
+                    // que vote la ley               
+                    botonVotar.onclick = (function () {
+                        var texto = ley.nombre;
+                        return function () {
+                            votarLey(texto);
+                        };
+                    })();
+
+
+                    // Añadimos los textos y el botón a las columnas
+                    td1.appendChild(text1);
+                    td2.appendChild(text2);
+                    td3.appendChild(text3);
+                    td4.appendChild(boton);
+                    td4.appendChild(botonVotar);
+
+                    // Las columnas a la fila
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
+                    tr.appendChild(td5);
+
+                    // Y la fila a la tabla
+                    tabla.appendChild(tr);
+                }
+
+                // Finalmente, agregamos la tabla creada dinamicamente al contenedor
+                document.getElementById('contenedor_tabla_leyes').appendChild(tabla);
+            }
+
+            function votarLey(nombreLey) {
+                //almacena a partir del nombre de la ley un objeto ley
+                var ley = localizarLey(nombreLey);
+                var arrayResultados = new Array();
+                var si = 0;
+                var no = 0;
+                var abs = 0;
+
+                for (var i = 0; i < arrayPoliticos.length; i++) {
+                    var resultado = arrayPoliticos[i].votar(ley);
+
+                    arrayResultados.push(resultado);
+
+                    if (resultado === 1) {
+                        si++;
+                    } else if (resultado === 0) {
+                        abs++;
+                    } else {
+                        no++;
+                    }
+                }
+                alert(nombreLey + ': ' + " Si: " + si + " No: " + no + " Se abstienen: " + abs);
+
+
+                dibujarResultado(arrayResultados);
+
+            }
+            ;
+            function dibujarResultado(array) {
+
+
+                var ancla = document.getElementById("mostrar_resultados");
+
+
+                // Comprobamos si tiene algún hijo
+                while(ancla.childElementCount > 0)
+                {
+                    // De ser así, lo eliminamos
+                    ancla.removeChild(ancla.childNodes[0]);
+                }
+
+                for (var i = 0; i < array.length; i++) {
+
+                    var escanyo = document.createElement("div");
+
+                    if (array[i] === 1) {
+                        escanyo.className = "VotoSi";
+                    } else if (array[i] === 0) {
+                        escanyo.className = "VotoAbstencion";
+                    } else {
+                        escanyo.className = "VotoNo";
+                    }
+
+                    ancla.appendChild(escanyo);
+                }
+
+            }
+
+            /**
+             * Funcion para almacenar 
+             * @param {type} textoDeLaProposicionDeLey
+             * @param {type} partidoCreador
+             * @param {type} aprobada
+             * @returns {undefined}
+             */
+            function crearLey(textoDeLaProposicionDeLey, partidoCreador, aprobada, nombreLey) {
+                //variable para almacenar el partido que te devuelve la funcion
+                var partido = localizarPartido(partidoCreador);
+                //si el valor no es undefined
+                if (typeof partido != "undefined") {
+
+                    //le pasamos los valores definidos
+                    var ley = new Ley(textoDeLaProposicionDeLey, partido, aprobada, nombreLey);
+
+                    //lo introducimos en el array
+                    arrayLeyes.push(ley);
+
+                    //llama a la funcion y le pasa el array
+                    crearTablaLeyes(arrayLeyes);
+                } else {
+                    //si el partido no ha sido creado mostramos un mensaje por pantalla
+
+                    alert("El partido politico no ha sido creado");
+                }
+
+
+
+            }
+
+            /**
+             * Constructor de la clase politico
+             * @param {String} nombre Nombre del politico
+             * @param {String} apellidos Apellidos del politico
+             * @param {String} dni DNI del politico
+             * @param {Partido} partido Partido al que pertenece el politico
+             * @param {string} ideologia Ideologia del politico
+             * @returns {Politico} devuelve un objeto politico
+             */
+            function Politico(nombre, apellidos, dni, partido, provincia, ideologia) {
+                this.nombre = nombre;
+                this.apellidos = apellidos;
+                this.dni = dni;
+                this.partido = partido;
+                this.provincia = provincia;
+                this.ideologia = ideologia;
+
+                /**
+                 * Función que se usará para que el político vote leyes. 
+                 * Si viene de su partido votará que sí un 98% de las veces. 
+                 * Si no será en contra en un 0.5% y en el restante 1.5% 
+                 * votará abstención.
+                 * @param {Ley} ley La propuesta de ley a votar
+                 * @returns {int} Devulve 1 si está a favor, -1 si está en contra y 0 si se abstiene
+                 */
+                this.votar = function (ley)
+                {
+
+                    // Calculamos un número aleatorio entre 1 y 1000;
+                    var resultado = (Math.random() * 1000) + 1;
+                    // Comprobamos si la ley está propuesta por el mismo partido al cual pertenece el político
+                    if (ley.partido === this.partido)
+                    {
+                        // Si es así comprobamos el número aleatorio.
+                        // Si en número está comprendido enter 1 y 5 el político votará en contra (0.5%)                            
+                        if (resultado >= 1 && resultado <= 5)
+                        {
+                            return -1;
+                        }
+
+                        // Si en número está comprendido enter 6 y 20 el político se abstendrá (1.5%)                            
+                        if (resultado >= 6 && resultado <= 20)
+                        {
+                            return 0;
+                        }
+
+                        // En cualquier otro caso, votará a favor (98%)
+                        if (resultado > 20)
+                        {
+                            return 1;
+                        }
+                    }
+                    else
+                    {
+                        // Si no es así comprobamos el número aleatorio.
+                        // Si en número está comprendido enter 1 y 5 el político votará a favor (0.5%)                            
+                        if (resultado >= 1 && resultado <= 5)
+                        {
+                            return 1;
+                        }
+
+                        // Si en número está comprendido enter 6 y 20 el político se abstendrá (1.5%)                            
+                        if (resultado >= 6 && resultado <= 20)
+                        {
+                            return 0;
+                        }
+
+                        // En cualquier otro caso, votará en contra (98%)
+                        if (resultado > 20)
+                        {
+                            return -1;
+                        }
+                    }
+
+                }
+            }
+
+
+
+            function crearTablaPoliticos(politicos)
+            {
+
+                // Localizamos el contenedor de la tabla
+                var contenedor = document.getElementById('contenedor_tabla_politicos');
+
+                // Comprobamos si tiene algún hijo
+                if (contenedor.childElementCount > 0)
+                {
+                    // De ser así, lo eliminamos
+                    contenedor.removeChild(contenedor.childNodes[0]);
+                }
+
+                // Creamos un nuevo objeto table
+                var tabla = document.createElement('table');
+
+                // Le asignamos un id
+                tabla.id = 'tabla_politicos';
+
+                // Creamos una fila para la descripción de las columnas
+                var tr = document.createElement('tr');
+
+                // Creamos dos columnas de cabecera
+                var th1 = document.createElement('th');
+                var th2 = document.createElement('th');
+                var th3 = document.createElement('th');
+                var th4 = document.createElement('th');
+                var th5 = document.createElement('th');
+                var th6 = document.createElement('th');
+
+                // Creamos los textos para las cabeceras
+                var header1 = document.createTextNode('Nombre');
+                var header2 = document.createTextNode('Apellidos');
+                var header3 = document.createTextNode('D.N.I.');
+                var header4 = document.createTextNode('Partido');
+                var header5 = document.createTextNode('Provincia');
+                var header6 = document.createTextNode('Ideología');
+
+                // Anexamos el texto a las cabeceras
+                th1.appendChild(header1);
+                th2.appendChild(header2);
+                th3.appendChild(header3);
+                th4.appendChild(header4);
+                th5.appendChild(header5);
+                th6.appendChild(header6);
+
+                // Y las cabeceras a la fila
+                tr.appendChild(th1);
+                tr.appendChild(th2);
+                tr.appendChild(th3);
+                tr.appendChild(th4);
+                tr.appendChild(th5);
+                tr.appendChild(th6);
+
+                // Finalmente agregamos la fila con la descripciónd e las columnas a la tabla
+                tabla.appendChild(tr);
+
+                // Iteramos tantas veces como elementos tenga el array de partidos que se nos ha pasado como parámetro
+                for (var i = 0; i < arrayPoliticos.length; i++) {
+
+                    // Recuperamos el politico correspondiente a la iteración
+                    var politico = arrayPoliticos[i];
+
+                    // Creamos una fila nueva para el politico
+                    tr = document.createElement('tr');
+
+                    // Y dos columnas
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    var td3 = document.createElement('td');
+                    var td4 = document.createElement('td');
+                    var td5 = document.createElement('td');
+                    var td6 = document.createElement('td');
+
+                    // Recuperamos el valor del nombre, el apellido y el nombre del partido y creamos dos objetos TextNode
+                    var text1 = document.createTextNode(politico.nombre);
+                    var text2 = document.createTextNode(politico.apellidos);
+                    var text3 = document.createTextNode(politico.dni);
+                    var text4 = document.createTextNode(politico.partido.nombre);
+                    var text5 = document.createTextNode(politico.provincia);
+                    var text6 = document.createTextNode(politico.ideologia);
+
+                    // Añadimos los textos a las columnas
+                    td1.appendChild(text1);
+                    td2.appendChild(text2);
+                    td3.appendChild(text3);
+                    td4.appendChild(text4);
+                    td5.appendChild(text5);
+                    td6.appendChild(text6);
+
+                    // Las columnas a la fila
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
+                    tr.appendChild(td5);
+                    tr.appendChild(td6);
+
+                    // Y la fila a la tabla
+                    tabla.appendChild(tr);
+                }
+
+                // Finalmente, agregamos la tabla creada dinamicamente al contenedor
+                document.getElementById('contenedor_tabla_politicos').appendChild(tabla);
+            }
+
+
+
+            /** 
+             * Funcion para crear un politico y almacenarlo en el array arrayPoliticos
+             * @param {String} nombre
+             * @param {String} apellidos
+             * @param {String} dni
+             * @param {String} partido
+             * @param {String} provincia
+             * @param {String} ideologia
+             * @returns {undefined} devuelve un objeto politico
+             */
+            function crearPolitico(nombre, apellidos, dni, partido, provincia, ideologia) {
+                //variable para almacenar el partido que te devuelve la funcion
+                var partido_politico = localizarPartido(partido);
+                //si el valor no es undefined 
+                if (typeof partido_politico != "undefined") {
+
+                    //le pasas a politico los valores que has recopilado
+                    var politico = new Politico(nombre, apellidos, dni, partido_politico, provincia, ideologia);
+
+                    //lo introducimos en el array
+                    arrayPoliticos.push(politico);
+
+                    //llama a la funcion y le pasa el array
+                    crearTablaPoliticos(arrayPoliticos);
+                    //si el partido no se ha creado mostamos un mensaje por pantalla
+                } else {
+
+                    alert("El partido politico no ha sido creado");
+                }
+            }
+
+            /**
+             * Funcion que nos permite localizar el partido a partir de su nombre
+             * @param {String} nombrePartido
+             * @returns {Partido}
+             */
+            function localizarPartido(nombrePartido) {
+                for (var i = 0; i < arrayPartidos.length; i++) {
+                    // Comprobamos si el partido actual tiene el mismo nombre que el que buscamos
+                    if (arrayPartidos[i].nombre === nombrePartido) {
+                        return arrayPartidos[i];
+                    }
+                }
+            }
+
+            /**
+             * 
+             * @param {type} nombreley
+             * @returns {unresolved}
+             */
+            function localizarLey(nombreley) {
+                for (var i = 0; i < arrayLeyes.length; i++) {
+                    // Comprobamos si el partido actual tiene el mismo nombre que el que buscamos
+                    if (arrayLeyes[i].nombre === nombreley) {
+                        return arrayLeyes[i];
+                    }
+                }
+            }
+            /**
+             * Función que se encarga de cargar los datos necesarios para que la página funcione
+             * @returns {undefined}
+             */
+            function inicializar()
+            {
+
+
+                // Carga de datos para pruebas
+                cargarDatos();
+
+            }
+
+            /**
+             * Funcion  para agregar partidos, politicos y leyes 
+             * @returns {undefined}
+             */
+            function cargarDatos() {
+
+                // Damos de alta los partidos políticos
+                var partido = new Partido('Derechas', 'PP');
+
+                arrayPartidos.push(partido);
+
+                partido = new Partido('Izquierdas', 'PSOE');
+
+                arrayPartidos.push(partido);
+
+                partido = new Partido('Izquierdas', 'Podemos');
+
+                arrayPartidos.push(partido);
+
+                partido = new Partido('Izquierdas', 'IU');
+
+                arrayPartidos.push(partido);
+
+                partido = new Partido('Centro', 'Ciudadanos');
+
+                arrayPartidos.push(partido);
+
+                // Mostramos la tabla de partidos
+                crearTablaPartidos(arrayPartidos);
+
+                // Creamos los políticos del Partido Popular
+                var politico = new Politico('Ana María', 'Botella Serrano', '40674937N', localizarPartido('PP'), 'Madrid', 'Derechas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('Mariano', 'Rajoy Brey', '60157546B', localizarPartido('PP'), 'Madrid', 'Derechas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('María Rita', 'Barberá Nolla', '28376971P', localizarPartido('PP'), 'Madrid', 'Derechas');
+
+                arrayPoliticos.push(politico);
+
+
+                // Creamos los políticos del Partido Socialista Obrero Español
+                politico = new Politico('Pedro', 'Sánchez Pérez-Castejón', '49714526A', localizarPartido('PSOE'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('Eduardo', 'Madina Muñoz', '35626611W', localizarPartido('PSOE'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('José Antonio', 'Pérez Tapias', '54435800K', localizarPartido('PSOE'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                // Creamos los políticos de Podemos
+                politico = new Politico('Pablo Manuel', 'Iglesias Turrión', '86013034A', localizarPartido('Podemos'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('Íñigo', 'Errejón Galván', '52165542R', localizarPartido('Podemos'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('María Teresa', 'Rodríguez-Rubio Vázquez', '49008570D', localizarPartido('Podemos'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                // Creamos los políticos de Izquierda Unida
+
+                politico = new Politico('Cayo', 'Lara Moya', '04743790V', localizarPartido('IU'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('Alberto Carlos', 'Garzón Espinosa', '06803755X', localizarPartido('IU'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('Antonio', 'Maíllo Cañada', '48003511G', localizarPartido('IU'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('Diego', 'Valderas Sosa', '39246455Z', localizarPartido('IU'), 'Madrid', 'Izquierdas');
+
+                arrayPoliticos.push(politico);
+
+                // Creamos los políticos de Ciudadanos
+
+                politico = new Politico('Albert', 'Rivera Díaz', '21613347V', localizarPartido('Ciudadanos'), 'Madrid', 'Centro');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('Javier', 'Nart Peñalver', '02344983H', localizarPartido('Ciudadanos'), 'Madrid', 'Centro');
+
+                arrayPoliticos.push(politico);
+
+                politico = new Politico('Carolina', 'Punset Bannel', '81212245G', localizarPartido('Ciudadanos'), 'Madrid', 'Centro');
+
+                arrayPoliticos.push(politico);
+
+                // Creamos la tabla de políticos
+                crearTablaPoliticos(arrayPoliticos);
+
+                // Creamos nuevas propuestas de ley
+                var ley = new Ley('Ley de pruebas para simular una propuesta de ley del Partido Popular', localizarPartido('PP'), 'Si', 'Ley PP 1');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley del Partido Popular', localizarPartido('PP'), 'Si', 'Ley PP 2');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley del Partido Socialista', localizarPartido('PSOE'), 'Si', 'Ley PSOE 1');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley del Partido Socialista', localizarPartido('PSOE'), 'Si', 'Ley PSOE 2');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley de Podemos', localizarPartido('Podemos'), 'Si', 'Ley Podemos 1');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley de Podemos', localizarPartido('Podemos'), 'Si', 'Ley Podemos 2');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley de IU', localizarPartido('IU'), 'Si', 'Ley IU 1');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley de IU', localizarPartido('IU'), 'Si', 'Ley IU 2');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley de Ciudadanos', localizarPartido('Ciudadanos'), 'Si', 'Ley Ciudadanos 1');
+
+                arrayLeyes.push(ley);
+
+                ley = new Ley('Ley de pruebas para simular una propuesta de ley de Ciudadanos', localizarPartido('Ciudadanos'), 'Si', 'Ley Ciudadanos 2');
+
+                arrayLeyes.push(ley);
+
+                // Creamos la tabla de leyes
+                crearTablaLeyes(arrayLeyes);
+            }
+
+
+
+
+        </script>
+    </body>
+</html>

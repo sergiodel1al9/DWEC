@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Ejercicio 1</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>               
+        <script>
+            //Pedimos el DNI al usuario
+            var dni = prompt("Introduce tu DNI: ");
+            //Invocamos a la funcion
+            validarDNI(dni);
+            
+            /**
+             * Funcion para validar el DNI
+             * @param {String} valorDNI cadena que contiene el DNI
+             * @returns {undefined}
+             */
+            function validarDNI(valorDNI) {
+                //almacenamos en la variable el numero sin la letra introducido
+                numero = valorDNI.substring(0, valorDNI.length - 1);
+                //almacenamos en la variable la letra sin los numeros introducidos
+                letra = valorDNI.substring(valorDNI.length - 1, valorDNI.length);
+                //calculamos el resto de dividir el numero entre 23 y lo almacenamos
+                numero = numero % 23;
+                //cadena para calcular la letra a partir del numero del DNI
+                valores = 'TRWAGMYFPDXBNJZSQVHLCKET';
+                //almacenamos el valor que corresponde al resto del numero dividido entre 23
+                valores = valores.substring(numero, numero + 1);
+
+                //si la letra introducida no coincide con la calculada mostramos un error
+                if (letra.toUpperCase() != valores) {
+                    alert("Introduzca un DNI válido!!");
+                } else {
+                    alert("DNI correcto!!");
+                }
+
+            }
+
+            document.write(dni);
+        </script>
+    </body>
+</html>
