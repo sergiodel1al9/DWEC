@@ -81,21 +81,21 @@ function calcularResultado() {
     switch (operacion) {
         case "+":
         {
-            operando1 = "Resultado: " + parseInt(operando1) + parseInt(operando2);
+            operando1 = "Resultado: " + (parseInt(operando1) + parseInt(operando2));
             operando2 = "";
             operacion = "";
             break;
         }
         case "-":
         {
-           operando1 = "Resultado: " + parseInt(operando1) - parseInt(operando2);
+           operando1 = "Resultado: " + (parseInt(operando1) - parseInt(operando2));
             operando2 = "";
             operacion = "";
             break;
         }
         case "*":
         {
-           operando1 = "Resultado: " + parseInt(operando1) * parseInt(operando2);
+           operando1 = "Resultado: " + (parseInt(operando1) * parseInt(operando2));
             operando2 = "";
             operacion = "";
             break;
@@ -103,7 +103,7 @@ function calcularResultado() {
         case "/":
         {
             if (parseInt(operando2) !== 0) {
-                operando1 = "Resultado: " + parseInt(operando1) / parseInt(operando2);
+                operando1 = "Resultado: " + (parseInt(operando1) / parseInt(operando2));
                 operando2 = "";
                 operacion = "";
             }
