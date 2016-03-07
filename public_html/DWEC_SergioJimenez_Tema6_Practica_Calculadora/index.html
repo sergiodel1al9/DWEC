@@ -9,33 +9,30 @@ and open the template in the editor.
         <title>Calculadora</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="estilos/style.css"/>
+        <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
-        <div><input name="display" value="0" size=20></div>
-        <div style="float:left"><input type="button" name="siete" id="7" value="7"/></div>
-        <div style="float:left"><input type="button" name="ocho" id="8" value="8"/></div>          
-        <div style="float:left"><input type="button" name="nueve" id="9" value="9"/></div>
+        <div><label  id="display"> </label></div>
+        <div class="boton"><input type="button" name="siete" id="7" value="7"/></div>
+        <div class="boton"><input type="button" name="ocho" id="8" value="8"/></div>          
+        <div class="boton"><input type="button" name="nueve" id="9" value="9"/></div>
         <div><input type="button" name="resta" id="resta" value="-"/></div>
 
-        <div style="float:left"><input type="button" name="cuatro" id="4" value="4"/></div>
-        <div style="float:left"><input type="button" name="cinco" id="5" value="5"/></div>          
-        <div style="float:left"><input type="button" name="seis" id="6" value="6"/></div>
+        <div class="boton"><input type="button" name="cuatro" id="4" value="4"/></div>
+        <div class="boton"><input type="button" name="cinco" id="5" value="5"/></div>          
+        <div class="boton"><input type="button" name="seis" id="6" value="6"/></div>
         <div><input type="button" name="suma" id="suma" value="+"/></div>
 
-        <div style="float:left"><input type="button" name="uno" id="1" value="1"/></div>
-        <div style="float:left"><input type="button" name="dos" id="2" value="2"/></div>          
-        <div style="float:left"><input type="button" name="tres" id="3" value="3"/></div>
+        <div class="boton"><input type="button" name="uno" id="1" value="1"/></div>
+        <div class="boton"><input type="button" name="dos" id="2" value="2"/></div>          
+        <div class="boton"><input type="button" name="tres" id="3" value="3"/></div>
         <div><input type="button" name="multiplicacion" id="multiplicacion" value="*"/></div>
 
-        <div style="float:left"><input type="button" name="cero" id="0" value="0"/></div>
-        <div style="float:left"><input type="button" name="division" id="division" value="/"/></div>
+        <div class="boton"><input type="button" name="cero" id="0" value="0"/></div>
+        <div class="boton"><input type="button" name="division" id="division" value="/"/></div>
+        <div class="boton"><input type="button" name="c" id="c" value="C"/></div>
         <div><input type="button" name="igual" id="igual" value="="/></div>
-        
-        <script>
-            function anyadirDisplay(){
-                for(var i = 0; i < 9; i++)
-                    
-            }
-        </script>
+                
     </body>
 </html>
