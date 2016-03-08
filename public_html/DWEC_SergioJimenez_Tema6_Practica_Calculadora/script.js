@@ -3,9 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+// Asignación de la inicialización de Javascript en la web
 window.onload = inicializar;
 
+
+/**
+ * Función para inicializar la página, las variables y eventos necesarios para 
+ * su funcionamiento
+ * @returns {undefined}
+ */
 function inicializar() {
+    // Definimos los eventos que van a tener los distintos controles de la página
     document.getElementById('1').addEventListener('click', anyadir1);
     document.getElementById('2').addEventListener('click', anyadir2);
     document.getElementById('3').addEventListener('click', anyadir3);
@@ -23,6 +32,7 @@ function inicializar() {
     document.getElementById('resta').addEventListener('click', resta);
     document.getElementById('c').addEventListener('click', limpia);
 
+    // Creamos las variables para almacenar los operandos y la operación
     operando1 = "";
     operando2 = "";
     operacion = "";
@@ -32,32 +42,43 @@ function inicializar() {
 
 }
 
+/**
+ * Funcion para añadir los valores al operando 1, operando 2 y operacion
+ * @param {int} valor
+ * @returns {undefined}
+ */
 function resultado(valor) {
-
+    //Si es una nueva opearacion iniaciamos todas las variables a 0 y cambiamos nuevaOperacion a false
     if (nuevaOperacion) {
         operando1 = "";
         operando2 = "";
         operacion = "";
         nuevaOperacion = false;
     }
-
+    //si valor es un numero y operacion es igual a 0 añadimos a operando 1 el valor
     if (!isNaN(valor)) {
         if (operacion === "") {
             operando1 += valor;
         }
+        //si operacion es igual a una operacion añadimos a operando 2 un valor
         else {
             operando2 += valor;
         }
     }
     else {
+        // si operando 1 no es igual a 0
         if (operando1 !== "") {
+            // y si valor no es igual a =
             if (valor !== "=") {
+                //asignamos a operacion el valor
                 operacion = valor;
             }
+            //calculamos el resultado según el operando
             else {
                 calcularResultado();
             }
         }
+        //si pulsamos una operacion al principio muestra un mensaje de error
         else
         {
             operando1 = "Debe introducir un numero antes de una operación.";
@@ -67,8 +88,13 @@ function resultado(valor) {
         }
 
     }
+    //mostramos los datos
     mostrarDatos();
 }
+/**
+ * Funcion para mostrar los datos en el display
+ * @returns {undefined}
+ */
 function mostrarDatos() {
     var display = document.getElementById("display");
 
@@ -76,7 +102,10 @@ function mostrarDatos() {
 }
 
 
-
+/**
+ * Funcion para mostrar el resultado de los dos operandos segun el simbolo que hayamos introducido
+ * @returns {undefined}
+ */
 function calcularResultado() {
     switch (operacion) {
         case "+":
@@ -88,14 +117,14 @@ function calcularResultado() {
         }
         case "-":
         {
-           operando1 = "Resultado: " + (parseInt(operando1) - parseInt(operando2));
+            operando1 = "Resultado: " + (parseInt(operando1) - parseInt(operando2));
             operando2 = "";
             operacion = "";
             break;
         }
         case "*":
         {
-           operando1 = "Resultado: " + (parseInt(operando1) * parseInt(operando2));
+            operando1 = "Resultado: " + (parseInt(operando1) * parseInt(operando2));
             operando2 = "";
             operacion = "";
             break;
@@ -119,7 +148,7 @@ function calcularResultado() {
     nuevaOperacion = true;
 }
 
-
+//Funciones para añadir el valor al pulsar el boton a la funcion resultado
 function anyadir1() {
     resultado("1");
 }
@@ -180,6 +209,10 @@ function igual() {
     resultado("=");
 }
 
+/**
+ * Funcion para inicializar las variables a 0
+ * @returns {undefined} 
+ * */
 function limpia() {
     operando1 = "";
     operando2 = "";
