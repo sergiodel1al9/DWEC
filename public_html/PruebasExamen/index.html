@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>jeje</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="script.js"></script>
+    </head>
+    <body>
+        <form id="formulario" action="" method="get"> <br/>
+            Nombre:<input type="text" name="nombre" id="nombre" value="" size="42" maxlength="30"/>
+            <br>
+            Apellidos:<input type="text" name="ape" id="apellidos" value="" size="40" maxlength="80"/>
+            <br>            
+            Fecha de nacimiento: <input type="date" name="fechaNacimiento" id="fechaNacimineto" value="" />
+            <br>        
+            <input type="submit" id="enviar" name="enviar" value="Validar" />
+            <input type="reset" name="limpiar" value="Borrar los datos introducidos"/>
+            <input id="leerCokie" type="button" name="mostrar" value="Leer cookies"/>
+        </form>
+
+        <form id="formularioTienda" action="" method="get"> <br/>
+            Producto:<input type="text" name="producto" id="producto" value="" size="42" maxlength="30"/>
+            <br>
+            Precio:<input type="text" name="precio" id="precio" value="" size="40" maxlength="80"/>
+            <br>        
+            <input id="anyadirProducto" type="button" name="enviar" value="Añadir" />
+
+        </form>
+
+        <div><table id="tabla" border="1px"></table></div>
+            
+    </body>
+</html>
