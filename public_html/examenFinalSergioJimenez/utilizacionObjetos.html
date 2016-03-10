@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body onload="inicializar();">
+
+
+        Código proveedor:<input type="text" name="codigo" id="codigoProovedor" value="" size="42" maxlength="30"/>
+        <br>
+        CIF:<input type="text" name="cif" id="cif" value="" size="40" maxlength="80"/>
+        <br>            
+        Teléfono:<input type="number" name="telefono" id="telefono" value="" />
+        <br>        
+        <button onclick="crearProveedor(
+                        document.getElementById('codigoProovedor').value,
+                        document.getElementById('cif').value,
+                        document.getElementById('telefono').value)">Añadir</button>
+
+        <div id="contenedor_tabla_proveedor"></div>
+
+
+
+        Código artículo:<input type="text" name="codigo" id="codigoArticulo" value="" size="42" maxlength="30"/>
+        <br>
+        Código Proveedor: <input type="text" name="codigo" id="codigoProovedorCreador" value="" size="42" maxlength="30"/>
+        <br>            
+        Descripción:<input type="text" name="descripcion" id="descripcion" value="" />
+        <br>
+        Precio:<input type="number" name="precio" id="precio" value="" />
+        <br>  
+        <button onclick="crearArticulo(
+                        document.getElementById('codigoArticulo').value,
+                        document.getElementById('codigoProovedorCreador').value,
+                        document.getElementById('descripcion').value,
+                        document.getElementById('precio').value)">Añadir</button>
+
+        <div id="contenedor_tabla_articulo"></div>
+
+        <script>
+            var arrayProveedores = new Array;
+            var arrayArticulos = new Array;
+
+            function Proveedor(codigoProovedor, cif, telefono) {
+                this.codigoProovedor = codigoProovedor;
+                this.cif = cif;
+                this.telefono = telefono;
+            }
+
+            function Articulo(codigoArticulo, codigoProovedor, descripcion, precio) {
+                this.codigoArticulo = codigoArticulo;
+                this.codigoProovedor = codigoProovedor;
+                this.descripcion = descripcion;
+                this.precio = precio;
+            }
+
+            function crearProveedor(codigoProovedor, cif, telefono) {
+                var proveedor = new Proveedor(codigoProovedor, cif, telefono);
+                arrayProveedores.push(proveedor);
+
+                crearTablaProveedor(arrayProveedores);
+            }
+            
+            function crearArticulo(codigoArticulo, codigoProovedor, descripcion, precio) {
+                var articulo = new Articulo(codigoArticulo, codigoProovedor, descripcion, precio);
+                arrayArticulos.push(articulo);
+
+                crearTablaArticulos(arrayArticulos);
+            }
+            
+
+            function crearTablaProveedor(arrayProveedores)
+            {
+                // Localizamos el contenedor de la tabla
+                var contenedor = document.getElementById('contenedor_tabla_proveedor');
+
+                // Comprobamos si tiene algún hijo
+                if (contenedor.childElementCount > 0)
+                {
+                    // De ser así, lo eliminamos
+                    contenedor.removeChild(contenedor.childNodes[0]);
+                }
+
+                // Creamos un nuevo objeto table
+                var tabla = document.createElement('table');
+
+                // Le asignamos un id
+                tabla.id = 'tabla_proveedor';
+
+
+                // Creamos una fila para la descripción de las columnas
+                var tr = document.createElement('tr');
+
+                // Creamos dos columnas de cabecera
+                var th1 = document.createElement('th');
+                var th2 = document.createElement('th');
+                var th3 = document.createElement('th');
+
+                // Creamos los textos para las cabeceras
+                var header1 = document.createTextNode('Cod proveedor');
+                var header2 = document.createTextNode('CIF');
+                var header3 = document.createTextNode('Teléfono');
+
+                // Anexamos el texto a las cabeceras
+                th1.appendChild(header1);
+                th2.appendChild(header2);
+                th3.appendChild(header3);
+                // Y las cabeceras a la fila
+                tr.appendChild(th1);
+                tr.appendChild(th2);
+                tr.appendChild(th3);
+                // Finalmente agregamos la fila con la descripciónd e las columnas a la tabla
+                tabla.appendChild(tr);
+
+                // Iteramos tantas veces como elementos tenga el array de partidos que se nos ha pasado como parámetro
+                for (var i = 0; i < arrayProveedores.length; i++) {
+
+                    // Recuperamos el partido correspondiente a la iteración
+                    var proveedor = arrayProveedores[i];
+
+                    // Creamos una fila nueva para el partido
+                    tr = document.createElement('tr');
+
+                    // Y dos columnas
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    var td3 = document.createElement('td');
+                    // Recuperamos el valor del nombre y del ideario y creamos dos objetos TextNode
+                    var text1 = document.createTextNode(proveedor.codigoArticulo);
+                    var text2 = document.createTextNode(proveedor.cif);
+                    var text3 = document.createTextNode(proveedor.telefono);
+                    // Añadimos los textos a las columnas
+                    td1.appendChild(text1);
+                    td2.appendChild(text2);
+                    td3.appendChild(text3);
+                    // Las columnas a la fila
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    // Y la fila a la tabla
+                    tabla.appendChild(tr);
+                }
+
+                // Finalmente, agregamos la tabla creada dinamicamente al contenedor
+                document.getElementById('contenedor_tabla_proveedor').appendChild(tabla);
+            }
+            
+            function crearTablaArticulos(arrayArticulos)
+            {
+                // Localizamos el contenedor de la tabla
+                var contenedor = document.getElementById('contenedor_tabla_articulo');
+
+                // Comprobamos si tiene algún hijo
+                if (contenedor.childElementCount > 0)
+                {
+                    // De ser así, lo eliminamos
+                    contenedor.removeChild(contenedor.childNodes[0]);
+                }
+
+                // Creamos un nuevo objeto table
+                var tabla = document.createElement('table');
+
+                // Le asignamos un id
+                tabla.id = 'tabla_articulo';
+
+
+                // Creamos una fila para la descripción de las columnas
+                var tr = document.createElement('tr');
+
+                // Creamos dos columnas de cabecera
+                var th1 = document.createElement('th');
+                var th2 = document.createElement('th');
+                var th3 = document.createElement('th');
+                var th4 = document.createElement('th');
+
+                // Creamos los textos para las cabeceras
+                var header1 = document.createTextNode('Código artículo');
+                var header2 = document.createTextNode('Código Proveedor');
+                var header3 = document.createTextNode('Descripción');
+                var header4 = document.createTextNode('Precio');
+
+                // Anexamos el texto a las cabeceras
+                th1.appendChild(header1);
+                th2.appendChild(header2);
+                th3.appendChild(header3);
+                th4.appendChild(header4);
+                // Y las cabeceras a la fila
+                tr.appendChild(th1);
+                tr.appendChild(th2);
+                tr.appendChild(th3);
+                tr.appendChild(th4);
+                // Finalmente agregamos la fila con la descripciónd e las columnas a la tabla
+                tabla.appendChild(tr);
+
+                // Iteramos tantas veces como elementos tenga el array de partidos que se nos ha pasado como parámetro
+                for (var i = 0; i < arrayArticulos.length; i++) {
+
+                    // Recuperamos el partido correspondiente a la iteración
+                    var articulo = arrayArticulos[i];
+
+                    // Creamos una fila nueva para el partido
+                    tr = document.createElement('tr');
+
+                    // Y dos columnas
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    var td3 = document.createElement('td');
+                    var td4 = document.createElement('td');
+                    // Recuperamos el valor del nombre y del ideario y creamos dos objetos TextNode
+                    var text1 = document.createTextNode(articulo.codigoArticulo);
+                    var text2 = document.createTextNode(articulo.codigoProovedor);
+                    var text3 = document.createTextNode(articulo.descripcion);
+                    var text4 = document.createTextNode(articulo.precio);
+                    
+                    // Añadimos los textos a las columnas
+                    td1.appendChild(text1);
+                    td2.appendChild(text2);
+                    td3.appendChild(text3);
+                    td4.appendChild(text4);
+                    // Las columnas a la fila
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
+                    // Y la fila a la tabla
+                    tabla.appendChild(tr);
+                }
+
+                // Finalmente, agregamos la tabla creada dinamicamente al contenedor
+                document.getElementById('contenedor_tabla_articulo').appendChild(tabla);
+            }
+        </script>
+    </body>
+</html>

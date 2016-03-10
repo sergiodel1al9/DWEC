@@ -106,9 +106,9 @@ function anadeElemento() {
 
     var textnode1 = document.createTextNode(text1);
     var textnode2 = document.createTextNode(text2);
-    
+
     document.getElementById('producto').value = '';
-     document.getElementById('precio').value = '';
+    document.getElementById('precio').value = '';
 
     columna1.appendChild(textnode1);
     columna2.appendChild(textnode2);

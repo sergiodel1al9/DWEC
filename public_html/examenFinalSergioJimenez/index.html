@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <script type="text/javascript" src="script.js"></script>
+    </head>
+    <body>
+        <form id="formulario" action="" method="get"> <br/>
+            Código proveedor:<input type="text" name="codigo" id="codigoProovedor" value="" size="42" maxlength="30"/>
+            <br>
+            CIF:<input type="text" name="cif" id="cif" value="" size="40" maxlength="80"/>
+            <br>            
+            Teléfono:<input type="number" name="telefono" id="telefono" value="" />
+            <br>        
+            <input type="button" id="guardar" name="enviar" value="Guardar" />
+            <input type="reset" value="Reiniciar">
+        </form>
+        
+        <form id="formularioTienda" action="" method="get"> <br/>
+            Código artículo:<input type="text" name="codigo" id="codigoArticulo" value="" size="42" maxlength="30"/>
+            <br>
+            Código Proveedor: <select id="selectCodigo"></select>
+            <br>            
+            Descripción:<input type="text" name="descripcion" id="descripcion" value="" />
+            <br>
+            Precio:<input type="number" name="precio" id="precio" value="" />
+            <br>  
+            <input type="button" id="anyadir" name="enviar" value="Añadir articulo" />
+            <input type="button" id="restablecer" name="enviar" value="Restablecer" />
+            <input id="reiniciar" type="reset" value="Reiniciar">
+        </form>
+        <div><table id="tabla" border="1px"></table></div>
+    </body>
+</html>
