@@ -7,7 +7,7 @@ window.onload = inicializar;
 function inicializar() {
     document.getElementById('guardar').addEventListener('click', validarForm1);
     document.getElementById('anyadir').addEventListener('click', validarForm2);
-    document.getElementById('restablecer').addEventListener('click', mostrarCookie);
+    document.getElementById('restablecer').addEventListener('click', leerCookie);
     document.getElementById('reiniciar').addEventListener('click', eliminarCookie);
 }
 
@@ -18,7 +18,7 @@ function inicializar() {
  */
 function validarCodProveedor(valor) {
 //si el formato es diferente al definido por la expresion regular devuelve falso
-    if (!(/^([a-z 0-9]{1,10})$/i.test(valor))) {
+    if (!(/\w{10}$/i.test(valor))) {
         return false;
     }
     return true;
@@ -47,7 +47,7 @@ function validarTelefono(valor) {
 
 function validarCodArticulo(valor) {
 //si el formato es diferente al definido por la expresion regular devuelve falso
-    if (!(/^\d{5}[A-Z]$/.test(valor))) {
+    if (!(/^[A-z]{3}\d{5}$/.test(valor))) {
         return false;
     }
     return true;
@@ -150,62 +150,64 @@ function guardarCookie() {
 }
 
 function leerCookie(nombre) {
-    var lista = document.cookie.split(";");
-    for (var i = 0; i < lista.length; i++) {
-        var busca = lista[i].search(nombre);
-        if (busca > -1) {
-            micookie = lista[i];
-        }
-    }
-    var igual = micookie.indexOf("=");
-    var valor = micookie.substring(igual + 1);
-    return valor;
+    alert(document.cookie);
 }
 
 
-function mostrarCookie() {
+/*function mostrarCookie() {
     alert('Código articulo: ' + leerCookie('codigoArticulo'));
     alert('Código proovedor: ' + leerCookie('selectCodigo'));
     alert('Descripción: ' + leerCookie('descripcion'));
     alert('Precio: ' + leerCookie('precio'));
-}
+}*/
 
-var eliminarCookie = function (key) {
-    return document.cookie = key + '=;expires=Thu, 14 Dec 2016 12:00:00 UTC';
+var eliminarCookie = function () {
+    document.getElementById('formulario').reset();
+    document.getElementById('formularioTienda').reset();
+    document.getElementById('selectCodigo').innerHTML = '';
+    document.getElementById('tabla').innerHTML = '';
+    contador = 1;
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var a = cookie.indexOf("=");
+        var b = a > -1 ? cookie.substr(0, a) : cookie;
+        document.cookie = b + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
 }
 
 function anadeTabla() {
     var fila = document.createElement("tr");
-    
+
     var columna1 = document.createElement("td");
     var columna2 = document.createElement("td");
     var columna3 = document.createElement("td");
     var columna4 = document.createElement("td");
-    
+
     var text1 = document.getElementById('codigoArticulo').value;
     var text2 = document.getElementById('selectCodigo').value;
     var text3 = document.getElementById('descripcion').value;
     var text4 = document.getElementById('precio').value;
-    
+
     var textnode1 = document.createTextNode(text1);
     var textnode2 = document.createTextNode(text2);
     var textnode3 = document.createTextNode(text3);
     var textnode4 = document.createTextNode(text4);
-    
+
     document.getElementById('codigoArticulo').value = '';
     document.getElementById('descripcion').value = '';
     document.getElementById('precio').value = '';
-    
+
     columna1.appendChild(textnode1);
     columna2.appendChild(textnode2);
     columna3.appendChild(textnode3);
     columna4.appendChild(textnode4);
-    
+
     fila.appendChild(columna1);
     fila.appendChild(columna2);
     fila.appendChild(columna3);
     fila.appendChild(columna4);
-    
+
     document.getElementById("tabla").appendChild(fila);
 }
 
